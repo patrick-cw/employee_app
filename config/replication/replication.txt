@@ -1,0 +1,35 @@
+*Install
+sudo apt-get update -y
+sudo apt-get install mysql-server -y
+sudo systemctl start mysql
+sudo systemctl enable mysql
+sudo mysql_secure_installation
+
+*Change Authentication Status
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Password123!';
+FLUSH PRIVILEGES;
+
+*Configure Replication Master & Slave
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf (Tambahkan bind address=0.0.0.0, server-id=1/2, dan log_bin=/var/log/mysql/mysql-bin.log)
+sudo systemctl restart mysql
+
+
+*Create Replication (Master)
+sudo mysql -u root –p
+CREATE USER 'replica'@'10.0.0.70' IDENTIFIED BY 'Replica123!';
+GRANT REPLICATION SLAVE ON *.* TO 'replica'@'10.0.0.70';
+SHOW MASTER STATUS\G;
+
+*Create Replication (Slave)
+sudo rm -f /var/lib/mysql/auto.cnf
+sudo systemctl restart mysql
+STOP SLAVE;
+CHANGE MASTER TO MASTER_HOST='10.0.0.4', MASTER_USER='replica', MASTER_PASSWORD='Replica123!', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=617;
+START SLAVE;
+SHOW SLAVE STATUS\G
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'Password123!' WITH GRANT OPTION;
+
+
+

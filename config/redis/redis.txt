@@ -1,0 +1,47 @@
+Install
+sudo apt update
+sudo apt install redis-server -y
+
+Configuration Master
+sudo nano /etc/redis/redis.conf
+	- comment bind_address
+	- set 'protected-mode' to 'no'
+
+Configuration Slave
+sudo nano /etc/redis/redis.conf
+	- comment bind_address
+	- set 'protected-mode' to 'no'
+	- add slaveof 10.0.0.147 6379
+
+Configuration Redis Sentinel
+sudo nano /etc/redis/sentinel.conf (file konfigurasi di file sentinel.conf)
+
+Restart Redis & Cek Replication
+sudo systemctl restart redis
+redis-cli SET hello "world"
+redis-cli GET hello
+
+Run Redis Sentinel
+sudo redis-server /etc/redis/sentinel.conf --sentinel
+
+Edit Config Redis Sentinel
+sudo nano /etc/redis/sentinel.conf (file konfigurasi di file sentinel.conf)
+
+Add File Sentinel Service
+sudo nano /etc/systemd/system/sentinel.service
+
+Change File Permission
+sudo chown redis:redis /etc/redis/sentinel.conf
+sudo chown redis:redis /var/log/redis/sentinel.log
+sudo chmod 640 /etc/redis/sentinel.conf
+sudo chmod 660 /var/log/redis/sentinel.log
+
+Reload daemon & Activate Sentinel Daemon
+sudo systemctl daemon-reload
+sudo systemctl enable sentinel.service
+
+Start Sentinel daemon
+sudo systemctl start sentinel
+
+Cek Status Replikasi
+redis-cli info replication | grep role
