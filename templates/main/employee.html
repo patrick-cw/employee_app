@@ -1,0 +1,79 @@
+{% extends "main/base.html" %}
+{% load static%}
+{% block content %}
+    
+<div class="container-fluid">
+    <div class="row" style="margin-top:50px;">
+    <div class="col-md-3">
+    </div>
+       
+    <div class="col-md-6">
+        <div class= "card mb-3">
+            <div class = "card-body">
+                <h5 class="card-title"style="text-align:center;"><img src="{% static 'img/logo.jpg' %}" alt="Card image cap" width="60" height="60"><br><br>Welcome to Employee App</h5>
+                    <div class="col">
+                      <a href="/add_employee" class="btn btn-primary">Add</a>   
+                      <form class="mt-3">
+                          <div class="input-group">
+                            <input name="q" type=text placeholder="Search" class="form-control form-control-lg"/>
+                            <div class="input-group-append">
+                                <button class="btn btn-dark btn-lg">Search</button>
+                            </div>
+                          </div>
+                        </form>
+                            <table class="table table-bordered" style="text-align: center;">
+                                <thead> 
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Full Name</th>
+                                        <th>Gender</th>
+                                        <th>Hire Date</th>
+                                        <th>Action</th>
+                                    </tr> 
+                                </thead>          
+                                    <tbody>
+                                        {% for employee in employee %}
+                                        <tr>
+                                            <th>{{employee.emp_no}}</th>
+                                            <td>{{employee.get_full_name}}</td>
+                                            <td>{{employee.gender}}</td>
+                                            <td>{{employee.hire_date}}</td>
+                                            <td><a href="/detail_employee/{{ employee.emp_no }}" class="btn btn-info">Detail</a> <a href="delete_employee/{{ employee.emp_no }}" class="btn btn-danger">Delete</a></td>
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                    </tbody>     
+                            </table>
+                            <div class="prev_next">
+
+                                {% if employee.has_previous %}
+                                  <a class="prev btn btn-info" href="?page={{employee.previous_page_number}}">Prev</a>
+                                {% endif %}
+                                {% if employee.has_next %}
+                                  <a class="next btn btn-info" href="?page={{employee.next_page_number}}">Next</a>
+                                {% endif %}
+                                <!-- <div class="pages">
+                                
+                                  {% for pg in page_range %}
+                                    {% if employee.number == pg %}
+                                      <a href="?page={{pg}}" class="pagination">{{pg}}</a>
+                                    {% else %}
+                                      <a href="?page={{pg}}" class="pagination">{{pg}}</a>
+                                    {% endif %}
+                                  {% endfor %}
+                                </div>
+                                <span class="clear_both"></span>
+                            
+                              </div>  -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          </div>
+      </div>  
+    <div class="col-md-3">
+    </div>
+</div>
+    
+   
+{% endblock %} 

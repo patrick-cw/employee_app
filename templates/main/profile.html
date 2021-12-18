@@ -1,0 +1,54 @@
+{% extends "main/base.html" %}
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+{% load static %}
+
+
+
+
+{% block content %}
+
+<link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'main/home.css' %}">
+
+<div class="container">
+    <div class="card login-card">
+        <div class="card-body">
+            <h1 style="text-align:center">Profile</h1><br>
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 " style="text-align:center"> 
+                        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                    </div>
+                <div class=" col-md-9 col-lg-9 "> 
+                    <table class="table table-user-information center" style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td>Username</td>
+                                <td>{{ user.username }}</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                            <tr>
+                                <td>Full Name</td>
+                                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                            </tr>                                
+                        </tbody>
+                        
+                    </table>
+                        
+                </div>  
+                <a href="/edit_profile"><button  class="btn btn-primary"style="margin-left:500px"><strong>Ubah</strong></button></a>  
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+

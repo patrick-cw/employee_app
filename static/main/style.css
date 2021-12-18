@@ -1,0 +1,227 @@
+/* Home Page CSS */
+.table-row{
+cursor:pointer;
+}
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+.vl {
+  border-left: 1px solid #dee2e6;
+  height: 60px;
+  padding-left:15px;
+}
+
+/* Footer CSS */
+footer{
+    background:#303030;
+    color:white;
+    text-align: center;
+    padding:100px;
+    height:200px;
+    margin-top:44px;
+}
+
+/* Lineups CSS */
+
+.lineup-ground-container {
+    margin: -4px -16px;
+    color: white;
+    font-size: 14px;
+    background-color: #0F9D58;
+    height: 880px;
+    position:relative;
+}
+
+.ground-team {
+    background-color: #0B8449;
+    color: white;
+    height: 6%;
+    z-index: 3;
+    display: block;
+    height: 50px;
+
+}
+
+.ground-team img {
+    height: 24px;
+    width: 24px;
+    top: 16px;
+    position: relative;
+    float: left;
+    margin-left: 24px;
+}
+
+.ground-team span{
+  position: relative;
+  top: 19px;
+}
+
+
+.ground-team-home {
+  float: left;
+  margin-left: 24px;
+}
+
+.ground-team-format{
+  float: right;
+  margin-right: 20px;
+}
+
+.lrvl-fl{
+  position:absolute;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+.lrvl-tgc {
+    margin-left: 40%;
+    top: 12%;
+    width: 20%;
+    height: 7%;
+    border-radius: 50%;
+}
+
+.lrvl-tg {
+    border-top-color: rgba(0,0,0,0);
+}
+
+.lrvl-gll {
+    margin-left: 25%;
+    width: 50%;
+    height: 11%;
+    background-color: #0F9D58;
+}
+
+.lrvl-gls {
+    margin-left: 40%;
+    width: 19%;
+    height: 4.5%;
+}
+
+.lrvl-vac {
+    margin-top: auto;
+    margin-bottom: auto;
+    top: 0;
+    bottom: 0;
+}
+
+.lrvl-mfc {
+    margin-left: 39.4%;
+    width: 20%;
+    height: 0;
+    padding-top: 20%;
+    border-radius: 50%;
+}
+
+.lrvl-mfl {
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255,255,255,0.3);
+}
+
+.lrvl-ls {
+    height: 44%;
+}
+
+.lrvl-fr {
+    position: relative;
+}
+
+.lrvl-pd {
+    display: inline-block;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.lrvl-pc {
+    border-radius: 50%;
+    border: 2px solid white;
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+}
+
+.lrvl-sic {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    margin-top: 20px;
+    margin-left: -3px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.lrvl-jnc {
+    display: inline-block;
+    width: 24px;
+    line-height: 32px;
+}
+
+.imso-loa {
+    cursor: pointer;
+}
+
+.lrvl-pnc {
+    margin-top: 4px;
+    width: 98%;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lrvl-pcc {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    margin-top: -8px;
+    margin-left: -7px;
+}
+
+.lrvl-ors-g {
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    margin-top: 15px;
+    margin-left: -41px;
+}
+
+.lrvl-bgc {
+    margin-left: 40%;
+    top: 80.7%;
+    width: 20%;
+    height: 7%;
+    border-radius: 48%;
+}
+
+.lrvl-bgl {
+    top: 82.5%;
+    border-bottom-color: rgba(0,0,0,0);
+}
+
+.lrvl-bgs {
+    top: 89.1%;
+    border-bottom-color: rgba(0,0,0,0);
+}
+
+.pagination a {
+  border-radius: 5px;
+}
+
+.pagination a.active {
+  border-radius: 5px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+.asteriskField {
+    display: none;
+}
