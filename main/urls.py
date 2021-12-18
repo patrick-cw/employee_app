@@ -4,9 +4,10 @@ from main import views
 
 app_name = "main"
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", views.employee, name="employee"),
+    path("", (views.employee), name="employee"),
     path("register/", views.register,name="register"),
     path("login/", views.login_request, name="login"),
     path("logout/", views.logout_request, name="logout"),

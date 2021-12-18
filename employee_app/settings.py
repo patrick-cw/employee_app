@@ -50,6 +50,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',    
+    # 'django.middleware.common.CommonMiddleware',
+    # 'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware', 
 ]
 
 ROOT_URLCONF = 'employee_app.urls'
@@ -151,3 +155,18 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# CACHE_MIDDLEWARE_ALIAS = 'default' 
+# CACHE_MIDDLEWARE_SECONDS = '600'    
+# CACHE_MIDDLEWARE_KEY_PREFIX = ''
+CACHE_TTL = 60 * 15
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://3.83.86.222:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "cache"
+    }
+}

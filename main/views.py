@@ -11,13 +11,43 @@ from django.views.generic import ListView, DetailView
 from .models import Employees,Salaries,Titles,Departments,DeptEmp,DeptManager
 from django.core.paginator import Paginator,EmptyPage
 from django.db.models import Q
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from django.db.models.signals import post_delete, post_save
+from django.dispatch import receiver
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+# @cache_page(CACHE_TTL)
+def get_employee(filter_employee=None):
+    if filter_employee:
+        print("Data From DB")
+        employee=Employees.objects.filter(Q(first_name__icontains=filter_employee) | Q(last_name__icontains=filter_employee) ) 
+    else:
+        print("Data From DB")
+        employee = Employees.objects.all()
+    return employee
 
 def employee(request):
-    if 'q' in request.GET:
-        q=request.GET['q']
-        employee=Employees.objects.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q) | Q(emp_no=q)) 
+    # if 'q' in request.GET:
+    #     q=request.GET['q']
+    #     employee=Employees.objects.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q) ) 
+    # else:
+    #     employee = Employees.objects.all()
+    filter_employee = request.GET.get('q')
+    print(filter_employee)
+    print(cache.get(filter_employee))
+    if cache.get(filter_employee):
+        print("Data From Cache")
+        employee = cache.get(filter_employee)
     else:
-        employee = Employees.objects.all()
+        if filter_employee:
+            employee=get_employee(filter_employee)
+            cache.set(filter_employee, employee)
+        else:
+            employee=get_employee()
+            
     p = Paginator(employee,20)
     page_num = request.GET.get('page',1)
     try:
@@ -31,12 +61,22 @@ def employee(request):
                   template_name='main/employee.html',
                   context = context)
 
+# @receiver(post_delete, sender=Employees)
+# def object_post_delete_handler(sender, **kwargs):
+#      cache.delete('filter_employee')
+
+
+# @receiver(post_save, sender=Employees)
+# def object_post_save_handler(sender, **kwargs):
+#     cache.delete('filter_employee')
+
 def add_employee(request):
    
     if request.method == "POST":
         form = AddEmployeeForm(request.POST)
         if form.is_valid():
             form.save()
+            cache.clear()
             return redirect("/")
             
         else:
@@ -48,15 +88,18 @@ def add_employee(request):
 
 def delete_employee(request, id):
     emp = Employees.objects.get(emp_no = id).delete()
+    cache.clear()
     return redirect("/")
 
 def detail_employee(request, id):
+    print("Data from DB")
     emp = Employees.objects.get(emp_no = id)
     salary = Salaries.objects.filter(emp_no=id)
     title = Titles.objects.filter(emp_no=id)
     dep = Departments.objects.all()
     as_emp = DeptEmp.objects.filter(emp_no=id)
     as_man = DeptManager.objects.filter(emp_no=id)
+    cache.set(id, emp)
     context={
         "employee": emp,
         "salaries":salary,
@@ -74,6 +117,7 @@ def edit_employee(request,id):
 
         if form.is_valid():
             form.save()
+            cache.clear()
             return redirect("main/edit_employee.html")
     else:
         form = EditEmployeeForm(instance=emp)
@@ -86,7 +130,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("main:home")
+            return redirect("/")
         else:
             for msg in form.error_messages:
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
@@ -115,7 +159,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 # messages.info(request,f"Anda masuk sebagai: {username}")
-                return redirect("main:home")
+                return redirect("/")
             else:
                 messages.error(request, "Username atau Kata Sandi Tidak Sesuai")
         else:
