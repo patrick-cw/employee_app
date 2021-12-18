@@ -23,7 +23,7 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 def get_employee(filter_employee=None):
     if filter_employee:
         print("Data From DB")
-        employee=Employees.objects.filter(Q(first_name__icontains=filter_employee) | Q(last_name__icontains=filter_employee) ) 
+        employee=Employees.objects.filter(Q(first_name__icontains=filter_employee) | Q(last_name__icontains=filter_employee) | Q(emp_no__icontains=filter_employee)) 
     else:
         print("Data From DB")
         employee = Employees.objects.all()
@@ -118,7 +118,7 @@ def edit_employee(request,id):
         if form.is_valid():
             form.save()
             cache.clear()
-            return redirect("main/edit_employee.html")
+            return redirect("/")
     else:
         form = EditEmployeeForm(instance=emp)
         args = {"form": form}
