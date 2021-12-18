@@ -79,19 +79,18 @@ WSGI_APPLICATION = 'employee_app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'employees',
         'USER': 'root',
         'PASSWORD': 'Password123!',
-        'HOST': '44.201.245.114',
+        'HOST': '3.84.3.245',
         'PORT': '3306',
     }
 }
 '''
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -102,7 +101,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
